@@ -12,16 +12,16 @@ from plotly.subplots import make_subplots
 # long_len = 10_000_000
 short_len = 1_000_000
 long_len = 10_000_000
-
+lens_ratio = long_len // short_len # чтобы раыномерно распрдеелить значения
 # 1) нет пересечения, все элементы m < всех элементов n
 #    разная четность, отсортированы, и m[i] < n[i] для любого i
 #    m - короткий (5M), n - длинный (10M)
-worst_m_1 = [2 * i for i in range(short_len)]  # четные, начинаются с 0
+worst_m_1 = [(2 * i) * lens_ratio for i in range(short_len)]  # четные, начинаются с 0 
 worst_n_1 = [2 * i + 1 for i in range(short_len + 1, long_len + short_len)]  # нечетные, все > max(m)
 
 # 2) m - все четные (короткий), n - все нечетные (длинный)
 #    разная четность, отсортированы, и m[i] < n[i] для любого i
-worst_m_2 = [2 * i for i in range(short_len)]  # четные, короткий
+worst_m_2 = [(2 * i) * lens_ratio for i in range(short_len)]  # четные, короткий
 worst_n_2 = [2 * i + 1 for i in range(long_len)]  # нечетные, длинный
 worst_m_2.append(long_len + 4)
 worst_n_2.append(long_len + 4)
@@ -29,7 +29,7 @@ worst_n_2.append(long_len + 4)
 # 3) m - все нечетные (длинный), n - все четные (короткий)
 #    разная четность, отсортированы, и m[i] < n[i] для любого i
 worst_m_3 = [2 * i + 1 for i in range(long_len)]  # нечетные, длинный
-worst_n_3 = [2 * i + 2 for i in range(short_len)]  # четные, короткий
+worst_n_3 = [(2 * i + 2) * lens_ratio for i in range(short_len)]  # четные, короткий
 worst_m_3.append(long_len + 4)
 worst_n_3.append(long_len + 4)
 
